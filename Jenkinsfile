@@ -1,33 +1,43 @@
 pipeline {
-    agent none
+agent any
     stages {
-        stage('Build Jar') {
-            agent {
-                docker {
-                    image 'maven:3-alpine'
-                    args '-v /root/.m2:/root/.m2'
-                }
-            }
+        stage('Checkout Code') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                cleanWs()
+                git branch: "master", url:'https://github.com/mandibt/dockerdemotemp.git
             }
         }
-        stage('Build Image') {
+        stage('Execute Tests') {
+            steps{
+                sh 'docker run -v ${PWD}/:/opt/robotframework/ interworks/rfrunner'
+            }
+        }
+        stage('Proccess Results') {
             steps {
-                script {
-                	app = docker.build("vinsdocker/selenium-docker")
+                script{
+                    bat 'del "Results\\*.zip'
+                    zip zipFile: 'results/results.zip', archive: false, dir: 'results', glob: '*.html'
+                    step(
+                        [
+                            $class              : 'RobotPublisher',
+                            outputPath          : 'results',
+                            outputFileName      : "output.xml",
+                            reportFileName      : 'report.html',
+                            logFileName         : 'log.html',
+                            disableArchiveOutput: false,
+                            passThreshold       : 95.0,
+                            unstableThreshold   : 90.0,
+                            otherFiles          : "**/*.png,**/*.jpg",
+                        ]
+                    )
+                emailext body: '${SCRIPT, template="robot.template"}', subject: "[Jenkins] Robot Framework testresults for Docker Demo Project", to: 'stefan.mandovski@interworks.com.mk', recipientProviders: [[$class: 'CulpritsRecipientProvider']], attachmentsPattern: 'results/results.zip'
                 }
             }
         }
-        stage('Push Image') {
-            steps {
-                script {
-			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-			        	app.push("${BUILD_NUMBER}")
-			            app.push("latest")
-			        }
-                }
-            }
+    }
+    post {
+        always {
+            archive (includes: 'results/*.html')
         }
     }
 }
