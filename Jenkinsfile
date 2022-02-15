@@ -9,7 +9,7 @@ agent any
         }
         stage('Execute Tests') {
             steps{
-                sh 'docker run -v ${PWD}/:/opt/robotframework/ deockerseb/jn'
+                sh 'docker run deockerseb/jn'
             }
         }
         stage('Proccess Results') {
@@ -19,7 +19,7 @@ agent any
                     zip zipFile: 'results/results.zip', archive: false, dir: 'results', glob: '*.html'
                     step(
                         [
-                            $class              : 'RobotPublisher',
+                            $class              : 'test',
                             outputPath          : 'results',
                             outputFileName      : "output.xml",
                             reportFileName      : 'report.html',
