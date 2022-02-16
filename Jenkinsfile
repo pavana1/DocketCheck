@@ -4,7 +4,7 @@ agent any
         stage('Checkout Code') {
             steps {
                 cleanWs()
-                git branch: "master", url:'https://github.com/pavana1/DocketCheck.git´
+                git branch: "master", url:'https://github.com/pavana1/DocketCheck.git'
             }
         }
         stage('Execute Tests') {
