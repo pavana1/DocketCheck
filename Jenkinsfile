@@ -9,7 +9,7 @@ agent any
         }
         stage('Execute Tests') {
             steps{
-                sh 'docker run deockerseb/jn'
+                sh 'robot test.robot'
             }
         }
         stage('Proccess Results') {
