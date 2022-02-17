@@ -3,7 +3,7 @@ agent none
 stages {
 stage('checkout') {
         steps {
-            github "https://github.com/pavana1/DocketCheck.git"
+            checkout github "https://github.com/pavana1/DocketCheck.git"
         }
     }
 stage('Execute Tests') {
