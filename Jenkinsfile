@@ -1,7 +1,7 @@
 pipeline {
 agent none
 stages {
-stage('github') {
+stage('checkout') {
         steps {
             github "https://github.com/pavana1/DocketCheck.git"
         }
