@@ -3,7 +3,7 @@ agent none
 stages {
 stage('github') {
         steps {
-            git branch: 'master', url: 'https://github.com/pavana1/DocketCheck.git'
+            github "https://github.com/pavana1/DocketCheck.git"
         }
     }
 stage('Execute Tests') {
