@@ -4,7 +4,7 @@ stages {
 stage('Checkout Code') {
 steps {
 git branch: 'master',
-  url: 'https://pavana1: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@github.com/pavana1/DocketCheck'
+  url: 'https://pavana1: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@github.com/pavana1/DocketCheck'
 }
 }
 stage('Execute Tests') {
