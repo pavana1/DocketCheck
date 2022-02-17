@@ -3,8 +3,7 @@ agent none
 stages {
 stage('Checkout Code') {
 steps {
-git branch: 'master',
-  url: "https://github.com/pavana1/DocketCheck"
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pavana1/DocketCheck']]])
 }
 }
 stage('Execute Tests') {
