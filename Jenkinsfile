@@ -1,37 +1,21 @@
 pipeline {
-agent any
+    agent any
+
     stages {
-        stage('Checkout Code') {
+        stage('Build') {
             steps {
-                cleanWs()
-                git branch: "master", url:'https://github.com/pavana1/DocketCheck.git'
+                echo 'Building..'
             }
         }
-        stage('Execute Tests') {
-            steps{
-                sh 'robot test'
+        stage('Test') {
+            steps {
+                echo 'Testing..'
             }
         }
-        stage('Results') {
+        stage('Deploy') {
             steps {
-                script{
-                    bat 'del "Results\\*.zip'
-                    zip zipFile: 'results/results.zip', archive: false, dir: 'results', glob: '*.html'
-                    step(
-                        [
-                            $class              : 'test',
-                            outputPath          : 'results',
-                            outputFileName      : "output.xml",
-                            reportFileName      : 'report.html',
-                            logFileName         : 'log.html',
-                            disableArchiveOutput: false,
-                            passThreshold       : 95.0,
-                            unstableThreshold   : 90.0,
-                            otherFiles          : "**/*.png,**/*.jpg",
-                        ]
-                    )
-                }
+                echo 'Deploying....'
             }
         }
     }
- }
+}
