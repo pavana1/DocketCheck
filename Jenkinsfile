@@ -9,10 +9,10 @@ agent any
         }
         stage('Execute Tests') {
             steps{
-                sh 'robot test.robot'
+                sh 'robot test'
             }
         }
-        stage('Proccess Results') {
+        stage('Results') {
             steps {
                 script{
                     bat 'del "Results\\*.zip'
@@ -30,14 +30,8 @@ agent any
                             otherFiles          : "**/*.png,**/*.jpg",
                         ]
                     )
-                emailext body: '${SCRIPT, template="robot.template"}', subject: "[Jenkins] Robot Framework testresults for Docker Demo Project", to: 'pavana418@gmail.com', recipientProviders: [[$class: 'CulpritsRecipientProvider']], attachmentsPattern: 'results/results.zip'
                 }
             }
         }
     }
-    post {
-        always {
-            archive (includes: 'results/*.html')
-        }
-    }
-}
+ }
