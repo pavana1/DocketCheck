@@ -8,7 +8,7 @@ stage('github') {
     }
 stage('Execute Tests') {
 steps{
-sh 'robot test.robot'
+sh 'robot test'
 }
 }
 stage('Results') {
