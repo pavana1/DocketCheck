@@ -3,13 +3,12 @@ agent none
 stages {
 stage('Checkout Code') {
 steps {
-cleanWs()
 git branch: "master", url:'https://github.com/pavana1/DocketCheck.git'
 }
 }
 stage('Execute Tests') {
 steps{
-sh 'robot test'
+sh 'robot test.robot'
 }
 }
 stage('Results') {
