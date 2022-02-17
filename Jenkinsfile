@@ -1,7 +1,7 @@
 pipeline {
 agent none
 stages {
-stage('Checkout') {
+stage('github') {
         steps {
             git branch: 'master', url: 'https://github.com/pavana1/DocketCheck.git'
         }
