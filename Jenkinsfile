@@ -1,11 +1,11 @@
 pipeline {
 agent none
 stages {
-stage('Checkout Code') {
-steps {
-checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pavana1/DocketCheck']]])
-}
-}
+stage('Checkout') {
+        steps {
+            git branch: 'master', url: 'https://github.com/pavana1/DocketCheck.git'
+        }
+    }
 stage('Execute Tests') {
 steps{
 sh 'robot test.robot'
